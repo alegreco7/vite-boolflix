@@ -1,13 +1,13 @@
-<template lang="">
-  <div>
-    
-  </div>
-</template>
 <script>
 export default {
 
 }
 </script>
-<style lang="">
-  
+<template lang="">
+  <div>
+
+  </div>
+</template>
+<style lang="scss">
+@use './styles/generals.scss';
 </style>
