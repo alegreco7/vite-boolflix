@@ -1,6 +1,11 @@
 <script>
+import { store } from "../store";
 export default {
-
+    data() {
+        return {
+            store
+        }
+    },
 }
 </script>
 <template lang="">
@@ -14,8 +19,8 @@ export default {
                 </div>
                 <div class="col-6">
                     <div class="input-group m-3">
-                        <input type="text" class="form-control" placeholder="Film, SerieTv">
-                        <button class="btn btn-secondary">Cerca</button>
+                        <input type="text" class="form-control" placeholder="Film, SerieTv" v-model="store.searchValue" @keyup.enter="$emit('SearchTitle')">
+                        <button class="btn btn-secondary" @click="$emit('SearchTitle')">Cerca</button>
                     </div>
                 </div>
             </div>
