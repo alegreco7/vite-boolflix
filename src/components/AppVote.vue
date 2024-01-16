@@ -10,7 +10,6 @@ export default {
         }
     },
     methods: {
-
         getStarVote(num) {
             let stars = []
             let n = Math.floor(num) / 2;
@@ -51,6 +50,7 @@ export default {
 
     .star {
         font-size: 20px;
+        color: goldenrod;
     }
 }
 </style>
