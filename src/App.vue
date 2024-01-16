@@ -1,19 +1,23 @@
 <script>
 import AppHeader from './components/AppHeader.vue';
-import AppFilms from "./components/AppFilms.vue";
-import AppTv from './components/AppTv.vue';
+import AppHome from './components/AppHome.vue';
+import AppSearched from './components/AppSearched.vue';
+
 import { store } from "./store";
 import axios from 'axios';
 export default {
   components: {
     AppHeader,
-    AppFilms,
-    AppTv
+    AppHome,
+    AppSearched
   },
   data() {
     return {
       store
     }
+  },
+  created() {
+    this.getHome()
   },
   methods: {
     search_title() {
@@ -24,11 +28,21 @@ export default {
       }
       store.arrayFilms = []
       axios.get(`${store.urlFilms}${store.APIKey}&query=${store.searchValue}&language=it-IT`).then(response => {
-        store.arrayFilms = [...response.data.results];
+        store.arrayFilms = response.data.results;
       })
       store.arrayTv = []
       axios.get(`${store.urlTv}${store.APIKey}&language=it-IT&query=${store.searchValue}`).then(data => {
-        store.arrayTv = [...data.data.results];
+        store.arrayTv = data.data.results;
+      })
+    },
+    getHome() {
+      store.popularFilms = [];
+      store.popularSeries = [];
+      axios.get(`${store.urlPopularFilms}${store.APIKey}&language=it-IT`).then(result => {
+        store.popularFilms = result.data.results;
+      })
+      axios.get(`${store.urlPopularTV}${store.APIKey}&language=it-IT`).then(res => {
+        store.popularSeries = res.data.results;
       })
     }
   },
@@ -36,10 +50,8 @@ export default {
 </script>
 <template lang="">
   <AppHeader @SearchTitle="search_title"/>
-  <div class="container">
-    <AppFilms v-if="store.searched"/>
-    <AppTv v-if="store.searched"/>
-  </div>
+  <AppSearched/>
+  <AppHome/>
 </template>
 <style lang="scss">
 @use './styles/generals.scss';
