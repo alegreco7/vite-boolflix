@@ -17,6 +17,11 @@ export default {
   },
   methods: {
     search_title() {
+      if (store.searchValue != '') {
+        store.searched = true;
+      } else {
+        store.searched = false;
+      }
       store.arrayFilms = []
       axios.get(`${store.urlFilms}${store.APIKey}&query=${store.searchValue}&language=it-IT`).then(response => {
         store.arrayFilms = [...response.data.results];
@@ -24,7 +29,6 @@ export default {
       store.arrayTv = []
       axios.get(`${store.urlTv}${store.APIKey}&language=it-IT&query=${store.searchValue}`).then(data => {
         store.arrayTv = [...data.data.results];
-        console.log(store.arrayTv);
       })
     }
   },
@@ -33,8 +37,8 @@ export default {
 <template lang="">
   <AppHeader @SearchTitle="search_title"/>
   <div class="container">
-    <AppFilms/>
-    <AppTv/>
+    <AppFilms v-if="store.searched"/>
+    <AppTv v-if="store.searched"/>
   </div>
 </template>
 <style lang="scss">
